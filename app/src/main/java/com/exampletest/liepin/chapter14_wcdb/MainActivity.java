@@ -158,8 +158,8 @@ public class MainActivity extends AppCompatActivity {
                             mDB.execSQL("INSERT INTO message VALUES (?);",
                                     new Object[]{message});
                             long end = SystemClock.uptimeMillis();
-                            if (Build.VERSION.SDK_INT> Build.VERSION_CODES.O) {
-                                SQLiteLint.notifySqlExecution("plain-text.db","INSERT INTO message VALUES (?);", (int) (end - begin));
+                            if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
+                                SQLiteLint.notifySqlExecution("/data/user/0/com.exampletest.liepin.chapter14_wcdb/databases/plain-text.db","INSERT INTO message VALUES (?);", (int) (end - begin));
                             }
                             return mDB.rawQuery("SELECT rowid as _id, content, '???' as sender FROM message;",
                                     null);
@@ -167,8 +167,8 @@ public class MainActivity extends AppCompatActivity {
                             mDB.execSQL("INSERT INTO message VALUES (?, ?);",
                                     new Object[]{message, "Me"});
                             long end = SystemClock.uptimeMillis();
-                            if (Build.VERSION.SDK_INT> Build.VERSION_CODES.O) {
-                                SQLiteLint.notifySqlExecution("plain-text.db","INSERT INTO message VALUES (?, ?);", (int) (end - begin));
+                            if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
+                                SQLiteLint.notifySqlExecution("/data/user/0/com.exampletest.liepin.chapter14_wcdb/databases/plain-text.db","INSERT INTO message VALUES (?, ?);", (int) (end - begin));
                             }
                             return mDB.rawQuery("SELECT rowid as _id, content, sender FROM message;",
                                     null);

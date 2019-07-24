@@ -34,30 +34,27 @@ public class MyApplication extends Application {
 //        IOCanaryPlugin ioCanaryPlugin = new IOCanaryPlugin(new IOConfig.Builder()
 //                .dynamicConfig(dynamicConfig)
 //                .build());
-
+        SQLiteLintPlugin plugin = new SQLiteLintPlugin(new SQLiteLintConfig(null));
+        builder.plugin(plugin);
 
         //init matrix
         Matrix.init(builder.build());
-        SQLiteLintPlugin plugin = prepareSQLiteLint();
+        plugin.start();
+
+        prepareSQLiteLint();
         // start plugin
 //        ioCanaryPlugin.start();
         //add to matrix
-
-        if (null != plugin) {
-            MatrixLog.i("MyApplication", "SQLiteLint load succeed! ");
-            builder.plugin(plugin);
-            plugin.start();
-        }
+//        MatrixLog.i("MyApplication", "SQLiteLint load succeed! ");
     }
 
-    private SQLiteLintPlugin prepareSQLiteLint() {
+    private void prepareSQLiteLint() {
         SQLiteLintPlugin plugin = (SQLiteLintPlugin) Matrix.with().getPluginByClass(SQLiteLintPlugin.class);
         if (plugin == null) {
-            return null;
+            return;
         }
         plugin.addConcernedDB(new SQLiteLintConfig.ConcernDb(MatrixDbHelper.get().getWritableDatabase())
                 .setWhiteListXml(R.xml.sqlite_lint_whitelist)
                 .enableAllCheckers());
-        return plugin;
     }
 }
